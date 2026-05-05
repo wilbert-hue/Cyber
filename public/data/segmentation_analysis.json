@@ -1,37 +1,46 @@
 {
   "US": {
-    "By Service Portfolio": {
-      "Cyber Risk Strategy & Governance": {},
-      "Digital Threat Monitoring & Protection": {},
-      "Personal & Lifestyle Cybersecurity": {},
-      "Identity & Access Security": {},
-      "Incident Response & Cyber Resilience": {},
-      "Human Layer Security (Training & Awareness)": {},
-      "Third-Party & Ecosystem Risk Management": {}
+    "By Region": {
+      "Northeast U.S.": {},
+      "Southeast U.S.": {},
+      "Midwest U.S.": {},
+      "Southwest U.S.": {},
+      "West U.S.": {}
     },
-    "By Service Delivery Model": {
-      "One-Time Advisory Engagements": {},
-      "Retainer-Based Cybersecurity Advisory": {},
-      "Concierge / White-Glove Cybersecurity Services": {},
-      "24/7 Managed Cybersecurity Support": {},
-      "Virtual CISO (vCISO) Services": {}
+    "By Service Type": {
+      "Investment Advisory Services": {},
+      "Tax and Estate Planning Advisory": {},
+      "Legal and Regulatory Advisory": {},
+      "Risk Management Advisory": {},
+      "Cybersecurity and Digital Risk Advisory": {},
+      "Lifestyle and Personal Services Advisory": {}
     },
-    "By Asset Coverage": {
-      "Individual & Family Digital Assets": {},
-      "Family Office Enterprise Systems": {},
-      "Extended Household Ecosystem": {}
+    "By Family Office Type": {
+      "Single Family Offices": {},
+      "Multi Family Offices": {},
+      "Virtual Family Offices": {}
     },
-    "By Asset Size Under Management (AUM)": {
-      "Below $500M": {},
-      "$500M – $1B": {},
-      "$1B – $5B": {},
-      "Above $5B": {}
+    "By Asset Size of Client Family": {
+      "Emerging Wealth Families (USD 50M to USD 250M)": {},
+      "Ultra High Net Worth Families (USD 250M to USD 1B)": {},
+      "Billionaire Family Offices (Above USD 1B)": {}
     },
-    "By Buyer Persona": {
-      "Family Principals / UHNW Individuals": {},
-      "CIO / CTO": {},
-      "Chief Risk Officer (CRO)": {},
-      "External Advisors (wealth managers, legal, tax)": {}
+    "By Advisory Delivery Model": {
+      "In House Advisory Teams": {},
+      "External Specialist Advisors": {},
+      "Hybrid Advisory Model": {}
+    },
+    "By Client Risk Focus Area": {
+      "Financial and Investment Risk": {},
+      "Legal and Regulatory Risk": {},
+      "Operational and Governance Risk": {},
+      "Cybersecurity and Privacy Risk": {},
+      "Reputation and Personal Security Risk": {}
+    },
+    "By Service Engagement Model": {
+      "Retainer Based Advisory": {},
+      "Project Based Advisory": {},
+      "Transaction Based Advisory": {}
     }
   }
 }

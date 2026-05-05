@@ -259,7 +259,8 @@ export function filterData(
         'Europe': ['U.K.', 'Germany', 'Italy', 'France', 'Spain', 'Russia', 'Rest of Europe'],
         'Asia Pacific': ['China', 'India', 'Japan', 'South Korea', 'ASEAN', 'Australia', 'Rest of Asia Pacific'],
         'Latin America': ['Brazil', 'Argentina', 'Mexico', 'Rest of Latin America'],
-        'Middle East & Africa': ['GCC', 'South Africa', 'Rest of Middle East & Africa']
+        'Middle East & Africa': ['GCC', 'South Africa', 'Rest of Middle East & Africa'],
+        US: ['Northeast U.S.', 'Southeast U.S.', 'Midwest U.S.', 'Southwest U.S.', 'West U.S.'],
       }
 
       // If a region is selected and this record is a country in that region, include it

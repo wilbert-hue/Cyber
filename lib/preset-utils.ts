@@ -7,14 +7,19 @@ import type { ComparisonData, DataRecord, FilterState } from './types'
 
 /** Older dashboards / presets used these segment-type keys */
 export const LEGACY_SEGMENT_TYPE_KEYS: Record<string, string> = {
-  'By Type': 'By Service Portfolio',
-  'By Organ Type': 'By Service Delivery Model',
-  'Application / Use Case': 'By Asset Coverage',
-  'By End User': 'By Buyer Persona',
-  'By Service portfolio': 'By Service Portfolio',
-  'By Technology': 'By Service Delivery Model',
-  'By Industry vertical': 'By Asset Coverage',
-  'By Organization type': 'By Buyer Persona',
+  'By Type': 'By Service Type',
+  'By Organ Type': 'By Family Office Type',
+  'Application / Use Case': 'By Asset Size of Client Family',
+  'By End User': 'By Service Engagement Model',
+  'By Service portfolio': 'By Service Type',
+  'By Service Portfolio': 'By Service Type',
+  'By Technology': 'By Advisory Delivery Model',
+  'By Industry vertical': 'By Client Risk Focus Area',
+  'By Organization type': 'By Family Office Type',
+  'By Asset Coverage': 'By Asset Size of Client Family',
+  'By Buyer Persona': 'By Service Engagement Model',
+  'By Service Delivery Model': 'By Advisory Delivery Model',
+  'By Asset Size Under Management (AUM)': 'By Asset Size of Client Family',
 }
 
 export function migrateSegmentTypeKey(segmentType: string | undefined | null): string | undefined | null {
@@ -240,7 +245,7 @@ export function createTopMarketFilters(data: ComparisonData | null): Partial<Fil
     viewMode: 'geography-mode', // Geography on X-axis, segments as series
     geographies: topRegions,
     segments: firstLevelSegments,
-    segmentType: firstSegmentType || 'By Service Portfolio',
+    segmentType: firstSegmentType || 'By Service Type',
     yearRange: [2023, 2027],
     dataType: 'value'
   }
@@ -268,7 +273,7 @@ export function createGrowthLeadersFilters(data: ComparisonData | null): Partial
     viewMode: 'geography-mode', // Geography on X-axis, segments as series
     geographies: topRegions,
     segments: firstLevelSegments,
-    segmentType: firstSegmentType || 'By Service Portfolio',
+    segmentType: firstSegmentType || 'By Service Type',
     yearRange: [2025, 2031],
     dataType: 'value'
   }
@@ -296,7 +301,7 @@ export function createEmergingMarketsFilters(data: ComparisonData | null): Parti
     viewMode: 'geography-mode', // Geography on X-axis, segments as series
     geographies: topCountries,
     segments: firstLevelSegments,
-    segmentType: firstSegmentType || 'By Service Portfolio',
+    segmentType: firstSegmentType || 'By Service Type',
     yearRange: [2025, 2031],
     dataType: 'value'
   }

@@ -1274,19 +1274,38 @@ export async function processJsonDataAsync(
     for (const topGeo of geographies) {
       const geoData = structureData[topGeo]
       if (geoData && typeof geoData === 'object') {
-        // Look for "By Region" segment type
         const byRegionData = geoData['By Region']
         if (byRegionData && typeof byRegionData === 'object') {
-          // Extract region names (first level keys under "By Region")
-          const regions = Object.keys(byRegionData).filter(key => {
+          const regionKeys = Object.keys(byRegionData).filter(key => {
             const value = byRegionData[key]
             return value && typeof value === 'object' && !Array.isArray(value)
           })
-          regions.forEach(region => {
+
+          // Leaf subdivisions under parent (e.g. US ▾ Northeast U.S.) — no nested geography rows
+          const subdivisionsAreLeaves =
+            regionKeys.length > 0 &&
+            regionKeys.every(rk => {
+              const regionData = byRegionData[rk]
+              if (!regionData || typeof regionData !== 'object') return false
+              const nested = Object.keys(regionData).filter(
+                k => k !== rk && typeof (regionData as any)[k] === 'object' && !Array.isArray((regionData as any)[k])
+              )
+              return nested.length === 0
+            })
+
+          if (subdivisionsAreLeaves) {
+            regionToCountries[topGeo] = [...regionKeys]
+            regionKeys.forEach(sub => {
+              if (!allCountries.includes(sub)) allCountries.push(sub)
+            })
+            if (!regionGeographies.includes(topGeo)) regionGeographies.push(topGeo)
+            continue
+          }
+
+          regionKeys.forEach(region => {
             if (!regionGeographies.includes(region) && !geographies.includes(region)) {
               regionGeographies.push(region)
             }
-            // Extract countries under each region (second level keys, excluding the region name itself)
             const regionData = byRegionData[region]
             if (regionData && typeof regionData === 'object') {
               const countries = Object.keys(regionData).filter(key => {
@@ -1306,14 +1325,14 @@ export async function processJsonDataAsync(
       }
     }
 
-    // Add regions and countries to geographies list
-    if (regionGeographies.length > 0) {
-      console.log(`Found ${regionGeographies.length} regions from "By Region":`, regionGeographies)
-      geographies = [...geographies, ...regionGeographies]
-    }
-    if (allCountries.length > 0) {
-      console.log(`Found ${allCountries.length} countries from "By Region":`, allCountries)
-      geographies = [...geographies, ...allCountries]
+    // Extend geography list (dedupe while preserving order)
+    const geographyExtras = [...regionGeographies, ...allCountries]
+    const seenGeo = new Set(geographies)
+    for (const g of geographyExtras) {
+      if (!seenGeo.has(g)) {
+        seenGeo.add(g)
+        geographies.push(g)
+      }
     }
 
     console.log(`Found ${geographies.length} total geographies:`, geographies)
@@ -1472,7 +1491,7 @@ export async function processJsonDataAsync(
     
     // Build metadata
     const metadata: Metadata = {
-      market_name: 'Family Office Cybersecurity Advisory Services Market',
+      market_name: 'Family Office Advisory Services Market',
       market_type: 'Market Analysis',
       industry: 'Healthcare & Pharmaceuticals',
       years: allYears,

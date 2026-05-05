@@ -74,8 +74,17 @@ export function GeographyMultiSelect() {
 
   const handleSelectAll = () => {
     if (!data) return
+    const geo = data.dimensions.geographies
+    const parents = Object.keys(geo.countries || {}).filter(
+      (p) => geo.countries[p] && geo.countries[p].length > 0
+    )
+    // Single national parent with subdivisions (e.g. US): national total only — avoids double-counting
+    if (parents.length === 1) {
+      updateFilters({ geographies: [parents[0]] })
+      return
+    }
     updateFilters({
-      geographies: data.dimensions.geographies.all_geographies
+      geographies: [...geo.all_geographies],
     })
   }
 
