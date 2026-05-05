@@ -188,11 +188,11 @@ export default function DashboardPage() {
           {/* Logo on the left */}
           <div className="flex-shrink-0">
             <Image 
-              src="/logo.png" 
-              alt="Coherent Market Insights Logo" 
+              src="/WMR.png" 
+              alt="Worldwide Market Reports logo" 
               width={150} 
-              height={60}
-              className="h-auto w-auto max-w-[150px]"
+              height={72}
+              className="h-auto w-auto max-w-[160px]"
               priority
             />
           </div>
@@ -201,10 +201,10 @@ export default function DashboardPage() {
           <div className="flex-1 flex justify-center">
             <div className="text-center">
               <h1 className="text-2xl font-bold text-black mb-1">
-                Coherent Dashboard
+                WMR Dashboard
               </h1>
               <h2 className="text-sm text-black">
-                {dashboardName || 'U.S Family Office Cybersecurity Advisory Services Market'}
+                {dashboardName || 'U.S Family Office Advisory Services Market'}
               </h2>
             </div>
           </div>
@@ -484,7 +484,7 @@ export default function DashboardPage() {
                     {activeTab === 'bubble' && (
                       <div id="bubble-chart">
                         <D3BubbleChartIndependent 
-                          title="Coherent Opportunity Matrix" 
+                          title="WMROpportunity Matrix" 
                           height={500}
                         />
                       </div>
@@ -580,7 +580,7 @@ export default function DashboardPage() {
                       <div className="border-b pb-8">
                         <h3 className="text-lg font-semibold text-black mb-4">🫧 Bubble Chart</h3>
                         <D3BubbleChartIndependent 
-                          title="Coherent Opportunity Matrix" 
+                          title="WMROpportunity Matrix" 
                           height={450}
                         />
                       </div>
