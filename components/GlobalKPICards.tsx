@@ -141,19 +141,27 @@ export function GlobalKPICards() {
     const marketSizeEndDisplay = marketSizeEnd
     const absoluteGrowthDisplay = absoluteGrowth
 
-    // Build descriptive labels
-    // Note: selectedGeographies might be empty if we fell back to showing all geographies
+    // Build descriptive labels (avoid "Global" when nothing is selected — show actual scope)
     const actualSelectedGeographies = filters.geographies.length > 0 ? filters.geographies : []
     const dataTypeLabel = filters.dataType === 'value' ? 'Market Size' : 'Market Volume'
 
-    // Get market name from metadata, fallback to "Global Market"
-    const marketName = data.metadata.market_name || 'Global Market'
+    const marketName = data.metadata.market_name || 'Market'
 
-    const geographyLabel = actualSelectedGeographies.length === 0
-      ? `Global ${marketName}`
-      : actualSelectedGeographies.length === 1
-      ? `${actualSelectedGeographies[0]} ${marketName}`
-      : `${actualSelectedGeographies.length} Geographies ${marketName}`
+    const geoScope =
+      (data.dimensions.geographies.all_geographies || []).filter((g) => g !== 'Global')
+
+    let geographyLabel: string
+    if (actualSelectedGeographies.length === 1) {
+      geographyLabel = `${actualSelectedGeographies[0]} ${marketName}`
+    } else if (actualSelectedGeographies.length > 1) {
+      geographyLabel = `${actualSelectedGeographies.length} Geographies ${marketName}`
+    } else if (geoScope.length === 1) {
+      geographyLabel = `${geoScope[0]} ${marketName}`
+    } else if (geoScope.length > 1) {
+      geographyLabel = `All markets (${geoScope.join(', ')}) — ${marketName}`
+    } else {
+      geographyLabel = marketName
+    }
     const segmentTypeLabel = targetSegmentType || 'All Segments'
 
     return {
