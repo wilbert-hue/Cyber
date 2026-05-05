@@ -21,7 +21,7 @@ import { ChartGroupSelector } from '@/components/filters/ChartGroupSelector'
 import { CustomScrollbar } from '@/components/ui/CustomScrollbar'
 import { GlobalKPICards } from '@/components/GlobalKPICards'
 import { getChartsForGroup } from '@/lib/chart-groups'
-import { Lightbulb, X, Layers, LayoutGrid, Settings } from 'lucide-react'
+import { Lightbulb, X, Layers, LayoutGrid, Settings, AlertTriangle } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { Footer } from '@/components/Footer'
 import Image from 'next/image'
@@ -212,8 +212,18 @@ export default function DashboardPage() {
         </div>
 
         {/* Global KPI Cards */}
-        <div className="mb-6">
+        <div className="mb-6 space-y-4">
           <GlobalKPICards />
+          <div
+            role="alert"
+            className="flex gap-3 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-950 shadow-sm"
+          >
+            <AlertTriangle className="h-5 w-5 flex-shrink-0 text-amber-600 mt-0.5" aria-hidden />
+            <p className="text-amber-950 leading-snug">
+              <span className="font-semibold">NOTE:</span>{' '}
+              All the data in the dashboard is demo data. No real-world data is related to this.
+            </p>
+          </div>
         </div>
 
 
