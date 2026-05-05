@@ -14,7 +14,7 @@ interface SelectedSegmentItem {
 export function CompactFilterPanel() {
   const { data, filters, updateFilters } = useDashboardStore()
   const [selectedSegmentType, setSelectedSegmentType] = useState<string>(
-    filters.segmentType || (data?.dimensions?.segments ? Object.keys(data.dimensions.segments)[0] : 'By Technology')
+    filters.segmentType || (data?.dimensions?.segments ? Object.keys(data.dimensions.segments)[0] : 'By Service Portfolio')
   )
   const [selectedSegments, setSelectedSegments] = useState<SelectedSegmentItem[]>([])
   const [currentSegmentSelection, setCurrentSegmentSelection] = useState<string>('')
@@ -214,30 +214,11 @@ export function CompactFilterPanel() {
 
   return (
     <div className="bg-white rounded-lg shadow-sm p-3 space-y-2.5">
-      {/* Data Type */}
+      {/* Data type is fixed to market value */}
       <div>
         <label className="text-xs font-medium text-black">Data Type</label>
-        <div className="flex gap-1 mt-1">
-          <button
-            onClick={() => updateFilters({ dataType: 'value' })}
-            className={`flex-1 px-2 py-1 text-xs rounded ${
-              filters.dataType === 'value'
-                ? 'bg-blue-600 text-white'
-                : 'bg-gray-100 text-black hover:bg-gray-200'
-            }`}
-          >
-            Value
-          </button>
-          <button
-            onClick={() => updateFilters({ dataType: 'volume' })}
-            className={`flex-1 px-2 py-1 text-xs rounded ${
-              filters.dataType === 'volume'
-                ? 'bg-blue-600 text-white'
-                : 'bg-gray-100 text-black hover:bg-gray-200'
-            }`}
-          >
-            Volume
-          </button>
+        <div className="mt-1 px-2 py-1 text-xs rounded bg-blue-600 text-white text-center">
+          Value
         </div>
       </div>
 

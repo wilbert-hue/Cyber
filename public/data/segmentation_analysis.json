@@ -1,63 +1,37 @@
 {
-  "Global": {
-    "By Type": {
-      "Sub-Normothermic Perfusion (20–34°C)": {},
-      "Warm or Normothermic Perfusion (35–37°C)": {}
+  "US": {
+    "By Service Portfolio": {
+      "Cyber Risk Strategy & Governance": {},
+      "Digital Threat Monitoring & Protection": {},
+      "Personal & Lifestyle Cybersecurity": {},
+      "Identity & Access Security": {},
+      "Incident Response & Cyber Resilience": {},
+      "Human Layer Security (Training & Awareness)": {},
+      "Third-Party & Ecosystem Risk Management": {}
     },
-    "By Organ Type": {
-      "Liver": {},
-      "Heart": {},
-      "Lung": {},
-      "Kidney": {},
-      "Others (Pancreas, Small bowel / Intestine, Composite Tissues / Limb Perfusion (emerging use cases))": {}
+    "By Service Delivery Model": {
+      "One-Time Advisory Engagements": {},
+      "Retainer-Based Cybersecurity Advisory": {},
+      "Concierge / White-Glove Cybersecurity Services": {},
+      "24/7 Managed Cybersecurity Support": {},
+      "Virtual CISO (vCISO) Services": {}
     },
-    "Application / Use Case": {
-      "Organ Preservation": {},
-      "Viability Assessment": {},
-      "Physiologic Transport": {},
-      "Reconditioning Marginal Organs": {},
-      "Others (Research Use / Protocol development)": {}
+    "By Asset Coverage": {
+      "Individual & Family Digital Assets": {},
+      "Family Office Enterprise Systems": {},
+      "Extended Household Ecosystem": {}
     },
-    "By End User": {
-      "Hospitals & Clinics": {},
-      "Specialty Clinic/Centers": {},
-      "Transplant Centers": {},
-      "Others (Research Institutes/Centers, Organ Procurement Organizations, etc.)": {}
+    "By Asset Size Under Management (AUM)": {
+      "Below $500M": {},
+      "$500M – $1B": {},
+      "$1B – $5B": {},
+      "Above $5B": {}
     },
-    "By Region": {
-      "North America": {
-        "U.S.": {},
-        "Canada": {}
-      },
-      "Europe": {
-        "U.K.": {},
-        "Germany": {},
-        "Italy": {},
-        "France": {},
-        "Spain": {},
-        "Russia": {},
-        "Rest of Europe": {}
-      },
-      "Asia Pacific": {
-        "China": {},
-        "India": {},
-        "Japan": {},
-        "South Korea": {},
-        "ASEAN": {},
-        "Australia": {},
-        "Rest of Asia Pacific": {}
-      },
-      "Latin America": {
-        "Brazil": {},
-        "Argentina": {},
-        "Mexico": {},
-        "Rest of Latin America": {}
-      },
-      "Middle East & Africa": {
-        "GCC": {},
-        "South Africa": {},
-        "Rest of Middle East & Africa": {}
-      }
+    "By Buyer Persona": {
+      "Family Principals / UHNW Individuals": {},
+      "CIO / CTO": {},
+      "Chief Risk Officer (CRO)": {},
+      "External Advisors (wealth managers, legal, tax)": {}
     }
   }
 }

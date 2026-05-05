@@ -5,6 +5,36 @@
 
 import type { ComparisonData, DataRecord, FilterState } from './types'
 
+/** Older dashboards / presets used these segment-type keys */
+export const LEGACY_SEGMENT_TYPE_KEYS: Record<string, string> = {
+  'By Type': 'By Service Portfolio',
+  'By Organ Type': 'By Service Delivery Model',
+  'Application / Use Case': 'By Asset Coverage',
+  'By End User': 'By Buyer Persona',
+  'By Service portfolio': 'By Service Portfolio',
+  'By Technology': 'By Service Delivery Model',
+  'By Industry vertical': 'By Asset Coverage',
+  'By Organization type': 'By Buyer Persona',
+}
+
+export function migrateSegmentTypeKey(segmentType: string | undefined | null): string | undefined | null {
+  if (segmentType == null || segmentType === '') return segmentType
+  return LEGACY_SEGMENT_TYPE_KEYS[segmentType] ?? segmentType
+}
+
+/** Drop geographies not present in loaded data; default to first available (e.g. US-only datasets). */
+export function migrateGeographiesSelection(
+  geographies: string[],
+  data: ComparisonData | null
+): string[] {
+  const allowed = data?.dimensions?.geographies?.all_geographies
+  if (!allowed?.length) return geographies
+  const allowedSet = new Set(allowed)
+  const kept = geographies.filter((g) => allowedSet.has(g))
+  if (kept.length > 0) return kept
+  return [allowed[0]]
+}
+
 /**
  * Calculate top regions based on market value for a specific year
  * @param data - The comparison data
@@ -210,7 +240,7 @@ export function createTopMarketFilters(data: ComparisonData | null): Partial<Fil
     viewMode: 'geography-mode', // Geography on X-axis, segments as series
     geographies: topRegions,
     segments: firstLevelSegments,
-    segmentType: firstSegmentType || 'By Technology',
+    segmentType: firstSegmentType || 'By Service Portfolio',
     yearRange: [2023, 2027],
     dataType: 'value'
   }
@@ -238,7 +268,7 @@ export function createGrowthLeadersFilters(data: ComparisonData | null): Partial
     viewMode: 'geography-mode', // Geography on X-axis, segments as series
     geographies: topRegions,
     segments: firstLevelSegments,
-    segmentType: firstSegmentType || 'By Technology',
+    segmentType: firstSegmentType || 'By Service Portfolio',
     yearRange: [2025, 2031],
     dataType: 'value'
   }
@@ -266,7 +296,7 @@ export function createEmergingMarketsFilters(data: ComparisonData | null): Parti
     viewMode: 'geography-mode', // Geography on X-axis, segments as series
     geographies: topCountries,
     segments: firstLevelSegments,
-    segmentType: firstSegmentType || 'By Technology',
+    segmentType: firstSegmentType || 'By Service Portfolio',
     yearRange: [2025, 2031],
     dataType: 'value'
   }

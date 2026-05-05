@@ -251,31 +251,9 @@ export const useDashboardStore = create<DashboardStore>((set, get) => ({
   updateFilters: (newFilters) => {
     console.log('🔧 Store: updateFilters called with:', newFilters)
     set((state) => {
-      // When switching to Volume, find a valid segment type that has volume data
-      if (newFilters.dataType === 'volume' && state.filters.dataType !== 'volume') {
-        const volumeRecords = state.data?.data.volume.geography_segment_matrix || []
-        const volumeSegmentTypes = new Set(volumeRecords.map(r => r.segment_type))
-        const allSegmentTypes = state.data ? Object.keys(state.data.dimensions.segments) : []
-
-        // Use current segment type if it has volume data, otherwise find the first one that does
-        let targetSegmentType = state.filters.segmentType
-        if (!volumeSegmentTypes.has(targetSegmentType)) {
-          if (volumeSegmentTypes.size > 0) {
-            // Use the first segment type that has volume records
-            targetSegmentType = Array.from(volumeSegmentTypes)[0]
-          } else if (allSegmentTypes.length > 0) {
-            // Fallback: use the first segment type from dimensions
-            targetSegmentType = allSegmentTypes[0]
-          }
-        }
-
-        console.log('🔧 Store: Switching to Volume - using segmentType:', targetSegmentType)
-        newFilters = {
-          ...newFilters,
-          segmentType: targetSegmentType,
-          segments: [], // Clear segments when switching data type
-          advancedSegments: [], // Clear advanced segments to keep UI in sync
-        } as any
+      // Dashboard is value-only; ignore volume selections from presets or legacy UI
+      if (newFilters.dataType === 'volume') {
+        newFilters = { ...newFilters, dataType: 'value' }
       }
 
       // If segmentType is changing, save current geographies and restore for new type
@@ -454,13 +432,19 @@ export const useDashboardStore = create<DashboardStore>((set, get) => ({
   
   updateOpportunityFilters: (newFilters) => {
     set((state) => {
+      const dataType =
+        newFilters.dataType === 'volume'
+          ? 'value'
+          : newFilters.dataType !== undefined
+            ? newFilters.dataType || 'value'
+            : state.opportunityFilters.dataType
       const updatedFilters: FilterState = {
         ...state.opportunityFilters,
         ...(newFilters.geographies !== undefined && { geographies: newFilters.geographies || [] }),
         ...(newFilters.segments !== undefined && { segments: newFilters.segments || [] }),
         ...(newFilters.segmentType !== undefined && { segmentType: newFilters.segmentType || '' }),
         ...(newFilters.yearRange !== undefined && { yearRange: newFilters.yearRange || [2021, 2033] }),
-        ...(newFilters.dataType !== undefined && { dataType: newFilters.dataType || 'value' }),
+        dataType,
         ...(newFilters.viewMode !== undefined && { viewMode: newFilters.viewMode || 'segment-mode' }),
         ...(newFilters.businessType !== undefined && { businessType: newFilters.businessType }),
         ...(newFilters.aggregationLevel !== undefined && { aggregationLevel: newFilters.aggregationLevel }),

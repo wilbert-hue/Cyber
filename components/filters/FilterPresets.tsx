@@ -1,13 +1,15 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { Zap, TrendingUp, Globe, Target, BarChart3, Save, Trash2, ChevronDown, ChevronUp } from 'lucide-react'
 import { useDashboardStore } from '@/lib/store'
 import { FilterState } from '@/lib/types'
 import { 
   createTopMarketFilters, 
   createGrowthLeadersFilters, 
-  createEmergingMarketsFilters 
+  createEmergingMarketsFilters,
+  migrateSegmentTypeKey,
+  migrateGeographiesSelection,
 } from '@/lib/preset-utils'
 
 interface FilterPreset {
@@ -91,6 +93,15 @@ export function FilterPresets() {
       newFilters.segmentType = filters.segmentType
     }
 
+    if (newFilters.segmentType) {
+      const migrated = migrateSegmentTypeKey(newFilters.segmentType)
+      if (migrated) newFilters.segmentType = migrated
+    }
+
+    if (data && newFilters.geographies !== undefined) {
+      newFilters.geographies = migrateGeographiesSelection(newFilters.geographies, data)
+    }
+
     updateFilters(newFilters as FilterState)
   }
 
@@ -128,17 +139,25 @@ export function FilterPresets() {
     localStorage.setItem('marketAnalysisPresets', JSON.stringify(updated))
   }
 
-  // Load custom presets from localStorage on mount
-  useState(() => {
+  // Load custom presets from localStorage on mount (migrate legacy segment type keys)
+  useEffect(() => {
     const saved = localStorage.getItem('marketAnalysisPresets')
-    if (saved) {
-      try {
-        setCustomPresets(JSON.parse(saved))
-      } catch (e) {
-        console.error('Error loading custom presets:', e)
-      }
+    if (!saved) return
+    try {
+      const parsed = JSON.parse(saved) as FilterPreset[]
+      const migrated = parsed.map((p) => {
+        const st = p.filters?.segmentType
+        const nextType = st != null && st !== '' ? migrateSegmentTypeKey(st) ?? st : st
+        return {
+          ...p,
+          filters: { ...p.filters, ...(nextType !== undefined ? { segmentType: nextType } : {}) },
+        }
+      })
+      setCustomPresets(migrated)
+    } catch (e) {
+      console.error('Error loading custom presets:', e)
     }
-  })
+  }, [])
 
   if (!data) return null
 
